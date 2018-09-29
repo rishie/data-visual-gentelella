@@ -1,0 +1,119 @@
+{% extends "base_site.html" %}
+
+{% block title %} Chart One {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="right_col" role="main">
+  <div class="">
+    <!-- title start-->
+    <div class="page-title">
+      <div class="title_left">
+      </div>
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- title end-->
+
+    <!-- Chart One start -->
+    <div class="col-md-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Traffic: Fatal Crashes By Gender (1975-2016)</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div id="eChart" style="height:500px; width:650px;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Chart One end -->
+
+  </div>
+</div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+{{ super() }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.common.min.js"></script>
+
+<script>
+  // data_json | tojson returns json in the form of a string
+  // the operation on the rhs of the | operator will be performed on the first element
+  var parsed_json1 = '{{ data_json1 | tojson }}'
+
+  // convert the json string into actual json
+  parsed_json1 = JSON.parse(parsed_json1)
+
+  var dom = document.getElementById("eChart");
+  var chartOne = echarts.init(dom);
+
+  var option = {
+    title: {
+      text: ''
+    },
+    legend: {
+      data: ['Male', 'Female'],
+      align: 'right'
+    },
+    toolbox: {
+      // y: 'bottom',
+      feature: {
+        magicType: {
+          type: ['stack', 'tiled']
+        },
+        dataView: {},
+        saveAsImage: {
+          pixelRatio: 2
+        }
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: Object.values(parsed_json1.Year),
+      silent: false,
+      splitLine: {
+        show: false
+      }
+    },
+    yAxis: {},
+    series: [{
+      name: 'Male',
+      type: 'bar',
+      data: Object.values(parsed_json1.Males_Number_Involved_In_Fatal_Crashes),
+      animationDelay: function (idx) {
+        return idx * 10;
+      }
+    }, {
+      name: 'Female',
+      type: 'bar',
+      data: Object.values(parsed_json1.Females_Number_Involved_In_Fatal_Crashes),
+      animationDelay: function (idx) {
+        return idx * 10 + 100;
+      }
+    }],
+    animationEasing: 'elasticOut',
+    animationDelayUpdate: function (idx) {
+      return idx * 5;
+    }
+  };
+  if (option && typeof option === "object") {
+    chartOne.setOption(option, true);
+  }
+
+</script>
+
+{% endblock javascripts %}

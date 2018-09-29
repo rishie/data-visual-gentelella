@@ -1,0 +1,123 @@
+{% extends "base_site.html" %}
+
+{% block title %} Chart Two {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+      </div>
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Two start -->
+    <div class="col-md-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Injury Rates Per 100K (1988-2015)</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div id="eChart" style="height:500px; width:650px;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Chart Two end -->
+
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+{{ super() }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.common.min.js"></script>
+
+<script>
+  var parsed_json2 = '{{ data_json2 | tojson }}'
+
+  // convert the json string into actual json
+  parsed_json2 = JSON.parse(parsed_json2)
+
+  var dom = document.getElementById("eChart");
+  var chartTwo = echarts.init(dom);
+
+  var option = {
+    title: {
+      text: ''
+    },
+     legend: {
+      data: ['Population', 'Licensed Drivers', 'Registered Vehicles'],
+      align: 'right'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [{
+      type: 'category',
+      boundaryGap: false,
+      data: Object.values(parsed_json2.Year)
+    }],
+    yAxis: [{
+      type: 'value'
+    }],
+    series: [{
+        name: 'Population',
+        type: 'line',
+        stack: '总量',
+        areaStyle: {},
+        data: Object.values(parsed_json2.Injury_Rate_per_100K_Population)
+      },
+      {
+        name: 'Licensed Drivers',
+        type: 'line',
+        stack: '总量',
+        areaStyle: {},
+        data: Object.values(parsed_json2.Injury_Rate_per_100k_Licensed_Drivers)
+      },
+      {
+        name: 'Registered Vehicles',
+        type: 'line',
+        stack: '总量',
+        areaStyle: {},
+        data: Object.values(parsed_json2.Injury_Rate_per_100K_Registered_Vehicles)
+      }
+    ]
+  };
+  if (option && typeof option === "object") {
+    chartTwo.setOption(option, true);
+  }
+</script>
+
+{% endblock javascripts %}

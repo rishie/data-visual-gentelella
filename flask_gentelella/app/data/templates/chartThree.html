@@ -1,0 +1,127 @@
+{% extends "base_site.html" %}
+
+{% block title %} Chart Two {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+      </div>
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Three start -->
+    <div class="col-md-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Driver Fatalities By State In 2016</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <div id="eChart" style="height:600px; width:700px;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Chart Three end -->
+
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+{{ super() }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts-en.common.min.js"></script>
+
+<script>
+  var parsed_json3 = '{{ data_json3 | tojson }}'
+
+  // convert the json string into actual json
+  parsed_json3 = JSON.parse(parsed_json3)
+
+  var dom = document.getElementById("eChart");
+  var chartThree = echarts.init(dom);
+
+  var option = {
+    title: {
+      text: '',
+      subtext: '',
+      x: 'center'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      data: ['California', 'Colorado', 'Connecticut', 'Delaware', 'Dist of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois']
+    },
+    series: [{
+      name: 'Fatality By State',
+      type: 'pie',
+      radius: '55%',
+      center: ['50%', '60%'],
+      data: [
+        {
+          value: Object.values(parsed_json3.Total_Killed)[6],
+          name: Object.values(parsed_json3.State)[6]
+        },
+        {
+         value: Object.values(parsed_json3.Total_Killed)[7],
+          name: Object.values(parsed_json3.State)[7]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[8],
+          name: Object.values(parsed_json3.State)[8]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[9],
+          name: Object.values(parsed_json3.State)[9]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[10],
+          name: Object.values(parsed_json3.State)[10]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[11],
+          name: Object.values(parsed_json3.State)[11]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[12],
+          name: Object.values(parsed_json3.State)[12]
+        },
+        {
+          value: Object.values(parsed_json3.Total_Killed)[13],
+          name: Object.values(parsed_json3.State)[13]
+        }
+      ],
+      itemStyle: {
+        emphasis: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }]
+  };
+  if (option && typeof option === "object") {
+    chartThree.setOption(option, true);
+  }
+</script>
+
+{% endblock javascripts %}
