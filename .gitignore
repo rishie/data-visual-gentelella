@@ -26,4 +26,4 @@ _templates
 package-lock.json
 
 # hide config
-api/api.conf
+api.conf
