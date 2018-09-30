@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/afourmy/flask-gentelella"
+    "url": "https://github.com/huesmiles49/data-visual-gentelella.git"
   },
   "keywords": [
     "node"
   ],
-  "author": "Antoine Fourmy",
+  "author": "Hue Ngo, Russell Carter",
   "contributors": [
-    "Antoine fourmy <antoine.fourmy@gmail.com>"
+    "Antoine Fourmy <antoine.fourmy@gmail.com>"
   ],
   "license": "MIT"
 }

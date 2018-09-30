@@ -12,7 +12,8 @@
 This project integrates Gentelella with Flask using: 
 - [Blueprints](http://flask.pocoo.org/docs/0.12/blueprints/) for scalability.
 - [flask_login](https://flask-login.readthedocs.io/en/latest/) for the login system (passwords hashed with bcrypt).
-- [flask_migrate](https://flask-migrate.readthedocs.io/en/latest/).
+- [GraphQL](https://github.com/graphql-python/graphene) for data optimization.
+- [mongoDB](https://github.com/mongodb/mongo) for data storage.
 
 Flask-gentelella also comes with a robust CI/CD pipeline using:
 - The [Pytest](https://docs.pytest.org/en/latest/) framework for the test suite (see the `tests` folder).
@@ -21,16 +22,6 @@ Flask-gentelella also comes with a robust CI/CD pipeline using:
 - [Selenium](https://www.seleniumhq.org/) to test the application with headless chromium.
 - A Dockerfile showing how to containerize the application with gunicorn, and a [Docker image](https://hub.docker.com/r/afourmy/flask-gentelella/) available on dockerhub, and integrated to the CI/CD pipeline (see instructions below).
 
-Here is an example of a real project implemented using Flask-Gentelella:
-- [Online demo](http://afourmy.pythonanywhere.com/)
-- [Source code](https://github.com/afourmy/eNMS)
-
-This project shows:
-- how back-end and front-end can interact responsively with AJAX requests.
-- how to implement a graph model with SQLAlchemy and use D3.js for [graph visualization](http://afourmy.pythonanywhere.com/views/logical_view).
-- how to implement a [workflow automation](http://afourmy.pythonanywhere.com/workflows/manage_BGP-configuration-workflow) system using Vis.js.
-- how to use [Leaflet.js](http://afourmy.pythonanywhere.com/views/geographical_view) for GIS programming.
-- how to use [Flask APScheduler](https://github.com/viniciuschiele/flask-apscheduler) to implement crontab-like features.
 
 # Installation
 
@@ -59,6 +50,4 @@ This project shows:
 ### 1. Fetch the image on dockerhub
     docker run -d -p 5000:5000 --name gentelella --restart always afourmy/flask-gentelella
 
-### 2. Go the http://127.0.0.1:5000/
-
-### 3. Create an account and log in
+### 2. Go the http://127.0.0.1:5000/index

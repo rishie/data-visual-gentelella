@@ -7,10 +7,10 @@ from flask_login import (
     logout_user
 )
 
-from app import db, login_manager
+from app import login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
-from app.base.models import User
+# from app.base.models import User
 
 
 @blueprint.route('/')
@@ -34,8 +34,8 @@ def route_fixed_template(template):
 def route_errors(error):
     return render_template('errors/page_{}.html'.format(error))
 
-## Login & Registration
 
+## Login & Registration
 
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
@@ -81,8 +81,8 @@ def shutdown():
     func()
     return 'Server shutting down...'
 
-## Errors
 
+## Errors
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
