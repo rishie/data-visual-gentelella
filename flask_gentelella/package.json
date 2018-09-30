@@ -1,7 +1,7 @@
 {
   "name": "Flask-gentelella",
   "version": "1.0.0",
-  "description": "A template integrating Gentelella with Flask",
+  "description": "Data visualizations integrating Gentelella with Flask",
   "scripts": {
     "lint": "eslint ."
   },
@@ -19,9 +19,9 @@
   "keywords": [
     "node"
   ],
-  "author": "Hue Ngo, Russell Carter",
+  "author": "Hue Ngo, ",
   "contributors": [
-    "Antoine Fourmy <antoine.fourmy@gmail.com>"
+    "Russell Carter"
   ],
   "license": "MIT"
 }
