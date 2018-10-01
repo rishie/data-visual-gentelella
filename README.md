@@ -41,7 +41,7 @@ Flask-gentelella also comes with a robust CI/CD pipeline using:
 ### 4. Run the application
     flask run --host=0.0.0.0
 
-### 4. Go the http://127.0.0.1:5000/
+### 4. Go the http://127.0.0.1:5000/index
 
 ### 5. Create an account and log in
 

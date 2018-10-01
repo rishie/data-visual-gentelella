@@ -22,6 +22,7 @@ def read_configuration():
     }
 
 conf_data = read_configuration()
+print(conf_data)
 
 user_ = conf_data['user']
 password_ = conf_data ['password']
@@ -29,12 +30,16 @@ database_ = conf_data ['database']
 host_ = conf_data['hostname']
 port_ = conf_data['port']
 
-host_data = f'mongodb://{user_}:{password_}@{host_}:{port_}/{database_}'
+host_data = 'mongodb://%s:%s@%s:%s/%s' %(user_, password_, host_, port_, database_)
+
+# used for python3.x.x
+# host_data = f'mongodb://{user_}:{password_}@{host_}:{port_}/{database_}'
 
 # connect to mlab instance
 connect(
-    db = database_, 
     username = user_, 
     password = password_,
-    host = host_data
+    host = host_data,
+    port = int(port_),
+    db=database_,
 )
