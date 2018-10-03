@@ -30,3 +30,4 @@ class LACollision(Document):
     primary_rd = StringField()
     secondary_rd = StringField()
     distance = IntField()
+    
