@@ -22,7 +22,6 @@ def read_configuration():
     }
 
 conf_data = read_configuration()
-print(conf_data)
 
 user_ = conf_data['user']
 password_ = conf_data ['password']
@@ -30,6 +29,7 @@ database_ = conf_data ['database']
 host_ = conf_data['hostname']
 port_ = conf_data['port']
 
+# cross-compatible python statement
 host_data = 'mongodb://%s:%s@%s:%s/%s' %(user_, password_, host_, port_, database_)
 
 # used for python3.x.x
