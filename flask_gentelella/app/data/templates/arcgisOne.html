@@ -1,0 +1,144 @@
+{% extends "base_site.html" %}
+
+  {% block title %} ArcGIS Charts {% endblock title %}
+
+  {% block stylesheets %}
+    {{ super() }}
+    <!-- ArcGIS -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+  {% endblock stylesheets %}
+
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">
+      
+      <div class="page-title">
+        <div class="title_left">
+          <h3>ArcGIS One</h3>
+        </div>
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- map start -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="x_panel">
+            <div class="x_content">
+              <div class="row"> 
+                <div class="col-md-6" style="padding: 30px">
+                  <p>Collisions in Los Angeles, 2012 - 2016</p>
+                  <span>ArcGIS Map</span>
+                  <div id="viewDiv" style="padding:0; margin:0; height:400px; width:800px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- map end -->
+    </div>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super() }}
+  <!-- JQVMap -->
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/jquery.vmap.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.usa.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
+  <!-- ArcGIS -->
+  <script src="https://js.arcgis.com/4.9/"></script>
+
+<script>
+  require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/FeatureLayer",
+    "esri/tasks/support/Query",
+    "esri/tasks/QueryTask",
+    "esri/Graphic",
+    "dojo/domReady!"
+  ], function (Map, MapView, FeatureLayer, Query, QueryTask, Graphic) {
+
+    // Add layers in the constructor of Map using an array
+    var fl = new FeatureLayer();
+  //  var gl = new GraphicsLayer();
+    var map = new Map({
+      basemap: "osm",
+      layers: [fl]
+    });
+
+    // Add layers using addMany()
+    map.add([fl]);
+
+    // create the view
+    var view = new MapView({
+      map: map,
+      container: "viewDiv",
+      zoom: 11,
+      center: [-118.226624, 34.0469]
+    });
+
+    // create query
+    var query = new Query();
+    query.where = "Accident_Year = '1'"
+    query.outFields = ["Accident_Year"];
+    query.returnGeometry = true;
+    console.log("query: " + query)
+
+    // create query task to get data from a json
+    var queryTask = new QueryTask({
+      url: "https://services9.arcgis.com/FnDeGU8OoijSzqFy/ArcGIS/rest/services/lacollisions_revised/FeatureServer/0?f=pjson"
+    });
+
+    // execute the query
+    queryTask.execute(query)
+      .then(function(result){
+        console.log(result)
+
+        result.features.forEach(function(item){
+          var g = new Graphic({
+            geometry: item.geometry,
+            attributes: item.attributes,
+            symbol: {
+              type: "simple",
+              color: "black",
+              width: 1.2,
+              style: "short-dot"
+            },
+            popupTemplate: {
+              title: "{Accident Year}",
+              content: "{Accident Year}"  // all of the fields
+            }
+          });
+          view.graphics.add(g);
+        });
+
+        // zoom to the features
+        view.goTo({
+          target: view.graphics
+        });
+
+      })
+
+      .otherwise(function(e){
+        console.log(e);
+      });
+
+  });
+
+</script>
+{% endblock javascripts %}
+
+
+

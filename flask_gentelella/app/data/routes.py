@@ -17,6 +17,11 @@ def route_template(template):
     data_json3 = get_data(
         '../csv/Drivers_per_state_2016.csv')
     # print(data_json3)
-    
-    return render_template(template + '.html', data_json1=data_json1, data_json2=data_json2, data_json3=data_json3)
 
+    # data_json4 = get_data(
+    #     '../csv/LACollisions_2012through2016.csv')
+    # print(data_json3)
+    
+    # return render_template(template + '.html', data_json1=data_json1, data_json2=data_json2, data_json3=data_json3,  data_json4=data_json4)
+
+    return render_template(template + '.html', data_json1=data_json1, data_json2=data_json2, data_json3=data_json3)
