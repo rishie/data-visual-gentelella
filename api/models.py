@@ -14,7 +14,7 @@ class LACollision(Document):
     juris = IntField()
     collision_date = DateTimeField()
     collision_time = IntField()
-    officer_id = IntField()
+    officer_id = StringField()
     reporting_district = IntField()
     day_of_week = IntField()
     chp_shift = IntField()
